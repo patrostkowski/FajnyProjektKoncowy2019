@@ -10,6 +10,10 @@ Player::Player(sf::RenderWindow& window)
 	player.setPosition(512, 384);
 	window.draw(player);
 	window.display();
+
+	/*
+	konstruktor ustawia wszystkie opcje gracza: kolor rozmiar pozycje itd.
+	*/
 }
 
 void Player::playerMovement(sf::RenderWindow& window)
@@ -25,5 +29,14 @@ void Player::playerMovement(sf::RenderWindow& window)
 
 	window.draw(player);
 	window.display();
+	/*
+	proste menu sterowania
+	*/
 }
+
+sf::FloatRect Player::getPlayerPos() const
+{
+	return player.getGlobalBounds();
+}
+
 
