@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include <iostream>
 
 Enemy::Enemy(float x, float y, sf::RenderWindow & window)
 {
@@ -15,11 +16,46 @@ void Enemy::drawEnemy(sf::RenderWindow & window)
 	window.draw(enemy);
 }
 
-void Enemy::enemyMove(sf::RenderWindow & window)
-{
-	for (int i = 0; i < 10; ++i)
+void Enemy::moveAxisXLeft(sf::RenderWindow & window, float x1, float velo)
+{	
+	/*
+	std::cout << "vec x1 " << x1 << std::endl;
+	std::cout << "enemy x " << enemy.getPosition().x << std::endl;
+	system("cls");
+	*/	
+	if (enemy.getPosition().x != x1)
 	{
-		enemy.move(enemy.getPosition().x-i*10, enemy.getPosition().y);
+		enemy.move(sf::Vector2f(-velo, 0));
+		window.draw(enemy);
+	}
+	else if (enemy.getPosition().x == x1)
+	{
+		enemy.move(sf::Vector2f(velo, 0));
+		window.draw(enemy);
+	}
+	else
+	{
+		window.draw(enemy);
+	}
+
+}
+
+void Enemy::moveAxisXRight(sf::RenderWindow & window, float x, float velo)
+{
+	if (enemy.getPosition().x < initialX)
+	{
+		enemy.move(sf::Vector2f(velo, 0));
 		window.draw(enemy);
 	}
 }
+
+void Enemy::moveSlant(sf::RenderWindow & window)
+{
+
+}
+
+void Enemy::rotate(sf::RenderWindow & window)
+{
+
+}
+

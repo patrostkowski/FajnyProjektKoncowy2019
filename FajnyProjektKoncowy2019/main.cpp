@@ -9,8 +9,8 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
 
 	Player player(window);
-	Enemy enemy(800,300,window);
-	Point point1(300,200,window);
+	Enemy enemy(800,300,window); //przekazac do gameplay
+	Point point1(300,200,window); //przekazac do gameplay
 
 	while (window.isOpen())
 	{
@@ -23,13 +23,12 @@ int main()
 
 		window.clear(sf::Color::White);
 
-		enemy.enemyMove(window);
+		enemy.moveAxisXLeft(window, 750, 0.01); //przekazac do gameplay
+//		enemy.moveAxisXRight(window, 750, 0.01); //przekazac do gameplay
 
-		point1.drawPoint(window);
+		point1.drawPoint(window); //przekazac do gameplay
 
-	//	enemy.drawEnemy(window);
-
-		if (player.getPlayerPos().intersects(point1.getPointPos()))
+		if (player.getPlayerPos().intersects(point1.getPointPos())) //przekazac do gameplay
 		{
 			point1.pointTaken();
 			std::cout << "XD\n";
