@@ -29,6 +29,7 @@ void Player::playerMovement(sf::RenderWindow& window)
 
 	window.draw(player);
 	window.display();
+
 	/*
 	proste menu sterowania
 	*/

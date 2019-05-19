@@ -2,15 +2,15 @@
 #include "SFML/Graphics.hpp"
 #include "Player.h"
 #include "Point.h"
+#include "Enemy.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
 
 	Player player(window);
-
-	Point point1(152, 100, window);
-	Point point2(521, 424, window);
+	Enemy enemy(800,300,window);
+	Point point1(300,200,window);
 
 	while (window.isOpen())
 	{
@@ -19,16 +19,21 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (player.getPlayerPos().intersects(point1.getPointPos()))
-			{
-				std::cout << "XD\n";
-				point1.pointTaken();
-			}
 		}
+
 		window.clear(sf::Color::White);
 
-		point1.setPoint(window);
-		point2.setPoint(window);
+		enemy.enemyMove(window);
+
+		point1.drawPoint(window);
+
+	//	enemy.drawEnemy(window);
+
+		if (player.getPlayerPos().intersects(point1.getPointPos()))
+		{
+			point1.pointTaken();
+			std::cout << "XD\n";
+		}
 
 		player.playerMovement(window); //przekazac do gameplay
 
