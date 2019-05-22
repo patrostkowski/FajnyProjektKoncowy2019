@@ -1,21 +1,19 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-enum Dir { LEFT, RIGHT };
+enum Dir { LEFT, RIGHT, UP, DOWN, TOP, BOTTOM};
 
 class Enemy
 {
 	Dir direction;
 	sf::CircleShape enemy;
-//	float velocity=0.03;
-	int initialX = 800;
 public:
 	Enemy(float x, float y, Dir dir, sf::RenderWindow& window);
 	void drawEnemy(sf::RenderWindow & window);
 	sf::FloatRect getEnemyPos() const;
-	void moveAxisXLeft(sf::RenderWindow & window, float x, float velo);
-	void moveAxisXRight(sf::RenderWindow & window, float x, float velo);
-	void switchAxis(sf::RenderWindow & window);
-	void moveSlant(sf::RenderWindow & window);
+	void moveAxisX(sf::RenderWindow & window, float x1, float x2);
+	void moveAxisY(sf::RenderWindow & window, float y1, float y2);
+	void moveSlant(sf::RenderWindow & window, float x, float y, bool dir);
+	void moveSquare(sf::RenderWindow & window, float x, float y);
 	void rotate(sf::RenderWindow & window);
 };

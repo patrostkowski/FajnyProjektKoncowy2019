@@ -22,9 +22,10 @@ sf::FloatRect Enemy::getEnemyPos() const
 	return enemy.getGlobalBounds();
 }
 
-void Enemy::moveAxisXLeft(sf::RenderWindow & window, float x1, float velo)
+void Enemy::moveAxisX(sf::RenderWindow & window, float x1, float x2)
 {	
 	window.draw(enemy);
+
 	/*
 	std::cout << "vec x1 " << x1 << std::endl;
 	std::cout << "enemy x " << enemy.getPosition().x << std::endl;
@@ -37,54 +38,113 @@ void Enemy::moveAxisXLeft(sf::RenderWindow & window, float x1, float velo)
 	{
 	case LEFT:
 	{
-		enemy.move(-0.02f, 0);
-		if (enemy.getPosition().x == 700.0f)
-			direction = RIGHT;
-		break;
-	}
-	case RIGHT:
-	{
-		enemy.move(0.02f, 0);
-		if (enemy.getPosition().x == 850.0f)
-			direction = LEFT;
-		break;
-	}
-	}
-}
-
-void Enemy::moveAxisXRight(sf::RenderWindow & window, float x, float velo)
-{
-	enemy.move(sf::Vector2f(velo, 0));
-	window.draw(enemy);
-	if (enemy.getPosition().x == initialX)
-		direction = LEFT;
-}
-
-void Enemy::switchAxis(sf::RenderWindow & window)
-{
-	window.draw(enemy);
-	switch (direction)
-	{
-	case LEFT:
-	{
 		enemy.move(sf::Vector2f(-0.02f, 0));
-		if (enemy.getPosition().x == 700.0f)
+		if (enemy.getPosition().x <= x1)
 			direction = RIGHT;
+
 		break;
 	}
 	case RIGHT:
 	{
 		enemy.move(sf::Vector2f(0.02f, 0));
-		if (enemy.getPosition().x == 850.0f)
+		if (enemy.getPosition().x >= x2)
 			direction = LEFT;
+
 		break;
 	}
 	}
 }
 
-void Enemy::moveSlant(sf::RenderWindow & window)
+void Enemy::moveAxisY(sf::RenderWindow & window, float y1, float y2)
 {
+	window.draw(enemy);
 
+	switch (direction)
+	{
+	case UP:
+	{
+		enemy.move(sf::Vector2f(0, -0.02f));
+		if (enemy.getPosition().y <= y1)
+			direction = DOWN;
+
+		break;
+	}
+	case DOWN:
+	{
+		enemy.move(sf::Vector2f(0, 0.02f));
+		if (enemy.getPosition().y >= y2)
+			direction = UP;
+
+		break;
+	}
+	}
+}
+
+void Enemy::moveSlant(sf::RenderWindow & window, float x, float y, bool dir)
+{
+	window.draw(enemy);
+
+	switch (direction)
+	{
+	case TOP:
+	{
+		if (dir == 0)
+		{
+			enemy.move(sf::Vector2f(-0.02f, -0.02f));
+			if (enemy.getPosition().y <= x)
+				direction = BOTTOM;
+		}
+		if (dir == 1)
+		{
+			enemy.move(sf::Vector2f(0.02f, 0.02f));
+			if (enemy.getPosition().x <= y)
+				direction = BOTTOM;
+		}
+		break;
+	}
+	case BOTTOM:
+	{
+		if (dir == 0)
+		{
+			enemy.move(sf::Vector2f(0.02f, 0.02f));
+			if (enemy.getPosition().y >= y)
+				direction = TOP;
+		}
+		if (dir == 1)
+		{
+			enemy.move(sf::Vector2f(-0.02f, -0.02f));
+			if (enemy.getPosition().y >= x)
+				direction = TOP;
+		}
+
+		break;
+	}
+	}
+}
+
+void Enemy::moveSquare(sf::RenderWindow & window, float x, float y)
+{
+	window.draw(enemy);
+
+	switch (direction)
+	{
+	case TOP:
+	{
+		enemy.move(sf::Vector2f(-0.02f, -0.02f));
+		if (enemy.getPosition().y <= x)
+			direction = BOTTOM;
+
+		break;
+	}
+	case BOTTOM:
+	{
+		enemy.move(sf::Vector2f(0.02f, 0.02f));
+		if (enemy.getPosition().y >= y)
+			direction = TOP;
+
+		break;
+	}
+	}
 }
 
 void Enemy::rotate(sf::RenderWindow & window)
