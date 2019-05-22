@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include <iostream>
 
-Enemy::Enemy(float x, float y, sf::RenderWindow & window)
+Enemy::Enemy(float x, float y, Dir dir, sf::RenderWindow & window)
 {
 	enemy.setFillColor(sf::Color::Blue);
 	enemy.setOutlineColor(sf::Color::Black);
@@ -9,6 +9,7 @@ Enemy::Enemy(float x, float y, sf::RenderWindow & window)
 	enemy.setOutlineThickness(2);
 	enemy.setOrigin(5, 5);
 	enemy.setPosition(x, y);
+	direction = dir;
 }
 
 void Enemy::drawEnemy(sf::RenderWindow & window)
@@ -16,36 +17,68 @@ void Enemy::drawEnemy(sf::RenderWindow & window)
 	window.draw(enemy);
 }
 
+sf::FloatRect Enemy::getEnemyPos() const
+{
+	return enemy.getGlobalBounds();
+}
+
 void Enemy::moveAxisXLeft(sf::RenderWindow & window, float x1, float velo)
 {	
+	window.draw(enemy);
 	/*
 	std::cout << "vec x1 " << x1 << std::endl;
 	std::cout << "enemy x " << enemy.getPosition().x << std::endl;
-	system("cls");
-	*/	
-	if (enemy.getPosition().x != x1)
-	{
-		enemy.move(sf::Vector2f(-velo, 0));
-		window.draw(enemy);
-	}
-	else if (enemy.getPosition().x == x1)
-	{
-		enemy.move(sf::Vector2f(velo, 0));
-		window.draw(enemy);
-	}
-	else
-	{
-		window.draw(enemy);
-	}
+	std::cout << "intiial x " << initialX << std::endl;
 
+	system("cls");
+	*/
+
+	switch (direction)
+	{
+	case LEFT:
+	{
+		enemy.move(-0.02f, 0);
+		if (enemy.getPosition().x == 700.0f)
+			direction = RIGHT;
+		break;
+	}
+	case RIGHT:
+	{
+		enemy.move(0.02f, 0);
+		if (enemy.getPosition().x == 850.0f)
+			direction = LEFT;
+		break;
+	}
+	}
 }
 
 void Enemy::moveAxisXRight(sf::RenderWindow & window, float x, float velo)
 {
-	if (enemy.getPosition().x < initialX)
+	enemy.move(sf::Vector2f(velo, 0));
+	window.draw(enemy);
+	if (enemy.getPosition().x == initialX)
+		direction = LEFT;
+}
+
+void Enemy::switchAxis(sf::RenderWindow & window)
+{
+	window.draw(enemy);
+	switch (direction)
 	{
-		enemy.move(sf::Vector2f(velo, 0));
-		window.draw(enemy);
+	case LEFT:
+	{
+		enemy.move(sf::Vector2f(-0.02f, 0));
+		if (enemy.getPosition().x == 700.0f)
+			direction = RIGHT;
+		break;
+	}
+	case RIGHT:
+	{
+		enemy.move(sf::Vector2f(0.02f, 0));
+		if (enemy.getPosition().x == 850.0f)
+			direction = LEFT;
+		break;
+	}
 	}
 }
 

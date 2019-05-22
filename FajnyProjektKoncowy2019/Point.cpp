@@ -34,11 +34,16 @@ void Point::pointTaken()
 {
 	taken = true;
 	point.setPosition(9999, 9999);
-
 	/*
 	funkcja pomocnicza - gdy punkt zostaje zdobyty zostaje przeniosiony poza ekran gry
 	*/
 }
+
+bool Point::isTaken()
+{
+	return taken;
+}
+
 
 
 

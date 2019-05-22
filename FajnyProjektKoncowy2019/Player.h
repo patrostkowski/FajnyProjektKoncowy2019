@@ -8,5 +8,6 @@ public:
 	Player(sf::RenderWindow& window);
 	void playerMovement(sf::RenderWindow& window);
 	sf::FloatRect getPlayerPos() const;
+	void resetPos();
 };
 

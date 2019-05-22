@@ -40,4 +40,9 @@ sf::FloatRect Player::getPlayerPos() const
 	return player.getGlobalBounds();
 }
 
+void Player::resetPos()
+{
+	player.setPosition(512, 384);
+}
+
 

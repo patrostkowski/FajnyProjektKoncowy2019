@@ -9,5 +9,6 @@ public:
 	void drawPoint(sf::RenderWindow & window);
 	sf::FloatRect getPointPos() const;
 	void pointTaken();
+	bool isTaken();
 };
 
