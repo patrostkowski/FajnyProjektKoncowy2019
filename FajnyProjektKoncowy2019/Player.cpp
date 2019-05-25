@@ -35,7 +35,7 @@ void Player::playerMovement(sf::RenderWindow& window)
 	*/
 }
 
-sf::FloatRect Player::getPlayerPos() const
+sf::FloatRect Player::getPlayerBorder() const
 {
 	return player.getGlobalBounds();
 }

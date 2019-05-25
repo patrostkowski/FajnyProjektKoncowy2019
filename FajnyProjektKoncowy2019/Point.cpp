@@ -25,7 +25,7 @@ void Point::drawPoint(sf::RenderWindow & window)
 	*/
 }
 
-sf::FloatRect Point::getPointPos() const
+sf::FloatRect Point::getPointBorder() const
 {
 	return point.getGlobalBounds();
 }

@@ -7,7 +7,7 @@ class Point
 public:
 	Point(float x, float y, sf::RenderWindow & window);
 	void drawPoint(sf::RenderWindow & window);
-	sf::FloatRect getPointPos() const;
+	sf::FloatRect getPointBorder() const;
 	void pointTaken();
 	bool isTaken();
 };
