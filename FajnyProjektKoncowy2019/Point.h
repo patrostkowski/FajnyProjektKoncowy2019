@@ -1,14 +1,16 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-class Point
+#include "Particle.h"
+
+class Point: public Particle
 {
-	sf::CircleShape point;
 	bool taken;
 public:
-	Point(float x, float y, sf::RenderWindow & window);
+	Point(sf::RenderWindow & window);
+	void setPos(float posx, float posy);
 	void drawPoint(sf::RenderWindow & window);
-	sf::FloatRect getPointBorder() const;
+	sf::FloatRect getBorder() const;
 	void pointTaken();
-	bool isTaken();
+	bool isTaken(); 
 };
 

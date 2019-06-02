@@ -1,16 +1,17 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "Particle.h"
 
-enum Dir { LEFT, RIGHT, UP, DOWN, TOP, BOTTOM};
+enum Dir { LEFT, RIGHT, UP, DOWN, SLANTTOP, SLANTBOTTOM};
 
-class Enemy
+class Enemy: public Particle
 {
 	Dir direction;
-	sf::CircleShape enemy;
+	float Diff;
 public:
-	Enemy(float x, float y, Dir dir, sf::RenderWindow& window);
-	void drawEnemy(sf::RenderWindow & window);
-	sf::FloatRect getEnemyBorder() const;
+	Enemy(Dir dir, float speed, sf::RenderWindow& window);
+	void setPos(float posx, float posy);
+	sf::FloatRect getBorder() const;
 	void moveAxisX(sf::RenderWindow & window, float x1, float x2);
 	void moveAxisY(sf::RenderWindow & window, float y1, float y2);
 	void SlantFall(sf::RenderWindow & window, float x, float y);

@@ -1,14 +1,13 @@
 #include "Point.h"
 #include <iostream>
 
-Point::Point(float x, float y, sf::RenderWindow& window)
+Point::Point(sf::RenderWindow& window)
 {
-	point.setFillColor(sf::Color::Yellow);
-	point.setOutlineColor(sf::Color::Black);
-	point.setRadius(10);
-	point.setOutlineThickness(2);
-	point.setOrigin(5, 5);
-	point.setPosition(x, y);
+	bodyCircle.setFillColor(sf::Color::Yellow);
+	bodyCircle.setOutlineColor(sf::Color::Black);
+	bodyCircle.setRadius(10);
+	bodyCircle.setOutlineThickness(2);
+	bodyCircle.setOrigin(5, 5);
 	taken = false;
 
 	/*
@@ -16,24 +15,29 @@ Point::Point(float x, float y, sf::RenderWindow& window)
 	*/
 }
 
+void Point::setPos(float posx, float posy)
+{
+	bodyCircle.setPosition(posx, posy);
+}
+
 void Point::drawPoint(sf::RenderWindow & window)
 {
-	window.draw(point);
+	window.draw(bodyCircle);
 
 	/*
 	punkt jest przekazywany do okna do petli while
 	*/
 }
 
-sf::FloatRect Point::getPointBorder() const
+sf::FloatRect Point::getBorder() const
 {
-	return point.getGlobalBounds();
+	return bodyCircle.getGlobalBounds();
 }
 
 void Point::pointTaken()
 {
 	taken = true;
-	point.setPosition(9999, 9999);
+	bodyCircle.setPosition(9999, 9999);
 	/*
 	funkcja pomocnicza - gdy punkt zostaje zdobyty zostaje przeniosiony poza ekran gry
 	*/
