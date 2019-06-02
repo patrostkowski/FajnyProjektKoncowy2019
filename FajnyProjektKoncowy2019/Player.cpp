@@ -1,8 +1,7 @@
 #include "Player.h"
 
 Player::Player(sf::RenderWindow& window)
-{
-	
+{	
 	bodyRect.setFillColor(sf::Color::Red);
 	bodyRect.setOutlineColor(sf::Color::Black);
 	bodyRect.setSize(sf::Vector2f(20, 20));
@@ -55,7 +54,8 @@ sf::FloatRect Player::getBorder() const
 
 void Player::resetPos()
 {
-	bodyRect.setPosition(512, 384);
+	std::cout << "Player reset\n";
+	bodyRect.setPosition(20, 20);
 }
 
 

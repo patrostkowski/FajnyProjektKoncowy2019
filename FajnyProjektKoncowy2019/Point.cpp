@@ -3,49 +3,43 @@
 
 Point::Point(sf::RenderWindow& window)
 {
-	bodyCircle.setFillColor(sf::Color::Yellow);
-	bodyCircle.setOutlineColor(sf::Color::Black);
-	bodyCircle.setRadius(10);
-	bodyCircle.setOutlineThickness(2);
-	bodyCircle.setOrigin(5, 5);
-	taken = false;
-
+	for (auto i = 0; i < 4; i++)
+	{
+		bodyPoint[i].setFillColor(sf::Color::Yellow);
+		bodyPoint[i].setOutlineColor(sf::Color::Black);
+		bodyPoint[i].setRadius(10);
+		bodyPoint[i].setOutlineThickness(2);
+		bodyPoint[i].setOrigin(5, 5);
+	}
 	/*
 	konstruktor ustawia wszystkie parametry punktu
 	*/
 }
 
-void Point::setPos(float posx, float posy)
+void Point::setPos(int indx,float posx, float posy)
 {
-	bodyCircle.setPosition(posx, posy);
+	bodyPoint[indx].setPosition(posx, posy);
 }
 
 void Point::drawPoint(sf::RenderWindow & window)
 {
-	window.draw(bodyCircle);
-
+	for(auto i=0;i<4;++i)
+		window.draw(bodyPoint[i]);
 	/*
 	punkt jest przekazywany do okna do petli while
 	*/
 }
 
-sf::FloatRect Point::getBorder() const
+void Point::collision(Player &player)
 {
-	return bodyCircle.getGlobalBounds();
-}
-
-void Point::pointTaken()
-{
-	taken = true;
-	bodyCircle.setPosition(9999, 9999);
-	/*
-	funkcja pomocnicza - gdy punkt zostaje zdobyty zostaje przeniosiony poza ekran gry
-	*/
-}
-
-bool Point::isTaken()
-{
-	return taken;
+	for (auto i = 0; i < 4; ++i)
+	{
+		if (player.getBorder().intersects(bodyPoint[i].getGlobalBounds())) //przekazac do gameplay oraz zrobic dla kazdego punktu zeby resetowalo
+		{
+			bodyPoint[i].setPosition(-100, -100);
+			std::cout << "point checked" << std::endl;
+		}
+	}
 }
 
 

@@ -1,16 +1,15 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Particle.h"
+#include "Player.h"
 
-class Point: public Particle
+class Point
 {
-	bool taken;
+	sf::CircleShape bodyPoint[4];
 public:
 	Point(sf::RenderWindow & window);
-	void setPos(float posx, float posy);
+	void setPos(int indx, float posx, float posy);
 	void drawPoint(sf::RenderWindow & window);
-	sf::FloatRect getBorder() const;
-	void pointTaken();
-	bool isTaken(); 
+	void collision(Player &player);
 };
 

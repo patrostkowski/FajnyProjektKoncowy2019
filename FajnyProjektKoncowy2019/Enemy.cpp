@@ -1,121 +1,142 @@
 #include "Enemy.h"
 #include <iostream>
 
-Enemy::Enemy(Dir dir, float speed, sf::RenderWindow & window)
+Enemy::Enemy(int count, Dir dir, float speed, sf::RenderWindow & window)
 {
-	bodyCircle.setFillColor(sf::Color::Blue);
-	bodyCircle.setOutlineColor(sf::Color::Black);
-	bodyCircle.setRadius(10);
-	bodyCircle.setOutlineThickness(2);
-	bodyCircle.setOrigin(5, 5);
-	Diff = speed;
-	direction = dir;
+	for (auto i = 0; i < count; i++)
+	{
+		bodyEnemy[i].setFillColor(sf::Color::Blue);
+		bodyEnemy[i].setOutlineColor(sf::Color::Black);
+		bodyEnemy[i].setRadius(10);
+		bodyEnemy[i].setOutlineThickness(2);
+		bodyEnemy[i].setOrigin(5, 5);
+		drift = speed;
+		direction = dir;
+	}
 }
 
-void Enemy::setPos(float posx, float posy)
+void Enemy::setPos(int indx, float posx, float posy)
 {
-	bodyCircle.setPosition(posx, posy);
+	bodyEnemy[indx].setPosition(posx, posy);
 }
 
-sf::FloatRect Enemy::getBorder() const
+void Enemy::collision(Player & player)
 {
-	return bodyCircle.getGlobalBounds();
+	for (auto i = 0; i < 4; i++)
+	{
+		if (player.getBorder().intersects(bodyEnemy[i].getGlobalBounds())) //przekazac do gameplay oraz reset dla kazdego enemy
+		{
+			player.resetPos();
+		}
+	}
 }
 
 void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)
 {	
-	window.draw(bodyCircle);
-
-	switch (direction)
+	for (auto i = 0; i < 4; i++)
 	{
-	case LEFT:
-	{
-		bodyCircle.move(sf::Vector2f(-Diff, 0));
-		if (bodyCircle.getPosition().x <= min)
-			direction = RIGHT;
+		window.draw(bodyEnemy[i]);
 
-		break;
-	}
-	case RIGHT:
-	{
-		bodyCircle.move(sf::Vector2f(Diff, 0));
-		if (bodyCircle.getPosition().x >= max)
-			direction = LEFT;
+		switch (direction)
+		{
+		case LEFT:
+		{
+			bodyEnemy[i].move(sf::Vector2f(-drift, 0));
+			if (bodyEnemy[i].getPosition().x <= min)
+				direction = RIGHT;
 
-		break;
-	}
+			break;
+		}
+		case RIGHT:
+		{
+			bodyEnemy[i].move(sf::Vector2f(drift, 0));
+			if (bodyEnemy[i].getPosition().x >= max)
+				direction = LEFT;
+
+			break;
+		}
+		}
 	}
 }
 
 void Enemy::moveAxisY(sf::RenderWindow & window, float min, float max)
 {
-	window.draw(bodyCircle);
-
-	switch (direction)
+	for (auto i = 0; i < 4; i++)
 	{
-	case UP:
-	{
-		bodyCircle.move(sf::Vector2f(0, -Diff));
-		if (bodyCircle.getPosition().y <= min)
-			direction = DOWN;
+		window.draw(bodyEnemy[i]);
 
-		break;
-	}
-	case DOWN:
-	{
-		bodyCircle.move(sf::Vector2f(0, Diff));
-		if (bodyCircle.getPosition().y >= max)
-			direction = UP;
+		switch (direction)
+		{
+		case UP:
+		{
+			bodyEnemy[i].move(sf::Vector2f(0, -drift));
+			if (bodyEnemy[i].getPosition().y <= min)
+				direction = DOWN;
 
-		break;
-	}
+			break;
+		}
+		case DOWN:
+		{
+			bodyEnemy[i].move(sf::Vector2f(0, drift));
+			if (bodyEnemy[i].getPosition().y >= max)
+				direction = UP;
+
+			break;
+		}
+		}
 	}
 }
 
 void Enemy::SlantFall(sf::RenderWindow & window, float min, float max)
 {
-	window.draw(bodyCircle);
+	for (auto i = 0; i < 4; i++)
+	{
+		window.draw(bodyEnemy[i]);
 
-	switch (direction)
-	{
-	case SLANTTOP:
-	{
-		bodyCircle.move(sf::Vector2f(-Diff, -Diff));
-		if (bodyCircle.getPosition().y <= min)
-			direction = SLANTBOTTOM;
-		
-		break;
-	}
-	case SLANTBOTTOM:
-	{
-		bodyCircle.move(sf::Vector2f(Diff, Diff));
-		if (bodyCircle.getPosition().y >= max)
-			direction = SLANTTOP;
-		break;
-	}
+		switch (direction)
+		{
+		case SLANTTOP:
+		{
+			bodyEnemy[i].move(sf::Vector2f(-drift, -drift));
+			if (bodyEnemy[i].getPosition().y <= min)
+				direction = SLANTBOTTOM;
+
+			break;
+		}
+		case SLANTBOTTOM:
+		{
+			bodyEnemy[i].move(sf::Vector2f(drift, drift));
+			if (bodyEnemy[i].getPosition().y >= max)
+				direction = SLANTTOP;
+			break;
+		}
+		}
 	}
 }
 
 void Enemy::SlantRise(sf::RenderWindow & window, float min, float max)
 {
-	window.draw(bodyCircle);
+	for (auto i = 0; i < 4; i++)
+	{
+		window.draw(bodyEnemy[i]);
 
-	switch (direction)
-	{
-	case SLANTTOP:
-	{
-		bodyCircle.move(sf::Vector2f(Diff, -Diff));
-		if (bodyCircle.getPosition().y <= min)
-			direction = SLANTBOTTOM;
+		switch (direction)
+		{
+		case SLANTTOP:
+		{
+			bodyEnemy[i].move(sf::Vector2f(drift, -drift));
+			if (bodyEnemy[i].getPosition().y <= min)
+				direction = SLANTBOTTOM;
 
-		break;
-	}
-	case SLANTBOTTOM:
-	{
-		bodyCircle.move(sf::Vector2f(-Diff, Diff));
-		if (bodyCircle.getPosition().y >= max)
-			direction = SLANTTOP;
-		break;
-	}
+			break;
+		}
+		case SLANTBOTTOM:
+		{
+			bodyEnemy[i].move(sf::Vector2f(-drift, drift));
+			if (bodyEnemy[i].getPosition().y >= max)
+				direction = SLANTTOP;
+			break;
+		}
+		}
 	}
 }
