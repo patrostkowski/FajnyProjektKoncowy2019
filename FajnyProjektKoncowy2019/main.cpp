@@ -44,7 +44,7 @@ int main()
 				window.close();
 		}
 
-		if (timer.getElapsedTime().asMilliseconds() > 1000)
+		if (timer.getElapsedTime().asMicroseconds() > 100)
 		{
 			window.clear(sf::Color::White);
 
@@ -71,6 +71,7 @@ int main()
 			player.playerMovement(window); //przekazac do gameplay
 			window.display();
 			window.clear();
+			timer.restart();
 		}
 	}
 	return 0;
