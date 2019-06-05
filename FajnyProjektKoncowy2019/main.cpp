@@ -10,6 +10,8 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
 
+	sf::Clock timer;
+
 	Player player(window);
 
 	Enemy Enemy1(3,SLANTBOTTOM,0.03f,window); //przekazac do gameplay
@@ -42,34 +44,34 @@ int main()
 				window.close();
 		}
 
-		window.clear(sf::Color::White);
-
-		Enemy1.SlantFall(window, 300, 600); //przekazac do gameplay
-		Enemy2.moveAxisX(window, 200, 600); //przekazac do gameplay
-
-		points.drawPoint(window); //przekazac do gameplay
-/*
-		if (player.getBorder().intersects(point1.getBorder())) //przekazac do gameplay oraz zrobic dla kazdego punktu zeby resetowalo
+		if (timer.getElapsedTime().asMilliseconds() > 1000)
 		{
-			point1.pointTaken();
-		}
-*/
-		points.collision(player);
-		Enemy1.collision(player);
-		Enemy2.collision(player);
-/*
-		if (player.getBorder().intersects(enemies.getBorder())) //przekazac do gameplay oraz reset dla kazdego enemy
-		{
-			player.resetPos();
-		}
-*/
+			window.clear(sf::Color::White);
 
-		player.playerMovement(window); //przekazac do gameplay
-		window.display();
+			Enemy1.SlantFall(window, 300, 600); //przekazac do gameplay
+			Enemy2.moveAxisX(window, 200, 600); //przekazac do gameplay
+
+			points.drawPoint(window); //przekazac do gameplay
+	/*
+			if (player.getBorder().intersects(point1.getBorder())) //przekazac do gameplay oraz zrobic dla kazdego punktu zeby resetowalo
+			{
+				point1.pointTaken();
+			}
+	*/
+			points.collision(player);
+			Enemy1.collision(player);
+			Enemy2.collision(player);
+			/*
+					if (player.getBorder().intersects(enemies.getBorder())) //przekazac do gameplay oraz reset dla kazdego enemy
+					{
+						player.resetPos();
+					}
+			*/
+
+			player.playerMovement(window); //przekazac do gameplay
+			window.display();
+			window.clear();
+		}
 	}
-
-	window.clear();
-	window.display();
-
 	return 0;
 }
