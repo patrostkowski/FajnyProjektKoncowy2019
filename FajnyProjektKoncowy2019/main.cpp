@@ -1,15 +1,16 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
-#include <vector>
+#include "SFML/Audio.hpp"
 #include "Particle.h"
 #include "Player.h"
 #include "Point.h"
 #include "Enemy.h"
+#include "Obstacles.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
-
+	sf::Music music;
 	sf::Clock timer;
 
 	Player player(window);
@@ -17,7 +18,19 @@ int main()
 	Enemy Enemy1(3,SLANTBOTTOM,0.03f,window); //przekazac do gameplay
 	Enemy Enemy2(6,LEFT,0.03f,window); //przekazac do gameplay
 
+	Obstacles obstacle(100, 300, window);
+	obstacle.setPos(500, 500);
+
 	Point points(window); //przekazac do gameplay
+
+	music.openFromFile("song.wav");
+	if (!music.openFromFile("song.wav"))
+	{
+		std::cout << "could not load music!";
+	}
+	music.setVolume(1);
+	music.play();
+	music.setLoop(true);
 
 	player.setPos(800, 500);
 	points.setPos(0,300, 400);
@@ -44,9 +57,12 @@ int main()
 				window.close();
 		}
 
-		if (timer.getElapsedTime().asMicroseconds() > 100)
+		if (timer.getElapsedTime().asMicroseconds() > 0.0166)
 		{
 			window.clear(sf::Color::White);
+
+			obstacle.draw(window);
+			obstacle.collision(player);
 
 			Enemy1.SlantFall(window, 300, 600); //przekazac do gameplay
 			Enemy2.moveAxisX(window, 200, 600); //przekazac do gameplay
