@@ -20,15 +20,17 @@ void Enemy::setPos(int indx, float posx, float posy)
 	bodyEnemy[indx].setPosition(posx, posy);
 }
 
-void Enemy::collision(Player & player)
+bool Enemy::collision(Player & player)
 {
 	for (auto i = 0; i < 4; i++)
 	{
 		if (player.getBorder().intersects(bodyEnemy[i].getGlobalBounds())) //przekazac do gameplay oraz reset dla kazdego enemy
 		{
 			player.resetPos();
+			return true;
 		}
 	}
+	return false;
 }
 
 void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)

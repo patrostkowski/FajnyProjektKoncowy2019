@@ -6,12 +6,15 @@
 #include "Point.h"
 #include "Enemy.h"
 #include "Obstacles.h"
+#include "Sound.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
-	sf::Music music;
 	sf::Clock timer;
+
+	Sound music("theme");
+	Sound sounds;
 
 	Player player(window);
 
@@ -24,15 +27,6 @@ int main()
 	obstacle2.setPos(750, 400);
 
 	Point points(window); //przekazac do gameplay
-
-	music.openFromFile("song.wav");
-	if (!music.openFromFile("song.wav"))
-	{
-		std::cout << "could not load music!";
-	}
-	music.setVolume(1);
-	music.play();
-	music.setLoop(true);
 
 	player.setPos(50, 50);
 
@@ -82,23 +76,15 @@ int main()
 			Enemy2.moveAxisX(window, 460, 580); //przekazac do gameplay
 
 			points.drawPoint(window); //przekazac do gameplay
-	/*
-			if (player.getBorder().intersects(point1.getBorder())) //przekazac do gameplay oraz zrobic dla kazdego punktu zeby resetowalo
-			{
-				point1.pointTaken();
-			}
-	*/
+
 			points.collision(player);
-			Enemy1.collision(player);
+
 			Enemy2.collision(player);
-			/*
-					if (player.getBorder().intersects(enemies.getBorder())) //przekazac do gameplay oraz reset dla kazdego enemy
-					{
-						player.resetPos();
-					}
-			*/
 
 			player.playerMovement(window); //przekazac do gameplay
+
+			if (Enemy1.collision(player) == true)
+				sounds.playSound(1);
 
 			window.display();
 			window.clear();

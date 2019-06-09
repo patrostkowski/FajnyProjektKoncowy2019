@@ -5,7 +5,7 @@
 
 class Player: public Particle
 {
-	const float speed = 0.05f;
+	const float speed = 0.03f;
 public:
 	Player(sf::RenderWindow& window);
 	void setPos(float posx, float posy);
