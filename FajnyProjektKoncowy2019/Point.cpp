@@ -10,6 +10,7 @@ Point::Point(sf::RenderWindow& window)
 		bodyPoint[i].setRadius(10);
 		bodyPoint[i].setOutlineThickness(2);
 		bodyPoint[i].setOrigin(5, 5);
+		pointCheck[i] = false;
 	}
 	/*
 	konstruktor ustawia wszystkie parametry punktu
@@ -38,8 +39,16 @@ void Point::collision(Player &player)
 		{
 			bodyPoint[i].setPosition(-100, -100);
 			std::cout << "point checked" << std::endl;
+			pointCheck[i] = true;
 		}
 	}
+}
+
+bool Point::isPointChecked(int a) const
+{
+	if(pointCheck[a]==true)
+		return true;
+	else return false;
 }
 
 

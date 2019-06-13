@@ -8,18 +8,32 @@
 #include "Obstacles.h"
 #include "Sound.h"
 
+enum GameState
+{
+	MAINMENU,LEVEL1,LEVEL2
+};
+enum SystemState
+{
+	PLAYING,
+	LOADING,
+	IDLE
+};
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
 	sf::Clock timer;
+
+	GameState gamestatus=LEVEL1;
+	SystemState systemstatus = LOADING;
 
 	Sound music("theme");
 	Sound sounds;
 
 	Player player(window);
 
-	Enemy Enemy1(4,RIGHT,0.03f,window); //przekazac do gameplay
-	Enemy Enemy2(4,LEFT,0.03f,window); //przekazac do gameplay
+	Enemy Enemy1(4,RIGHT,0.01f,window); //przekazac do gameplay
+	Enemy Enemy2(4,LEFT,0.01f,window); //przekazac do gameplay
 
 	Obstacles obstacle(300, 600, window);
 	Obstacles obstacle2(300, 600, window);
@@ -27,7 +41,7 @@ int main()
 	obstacle2.setPos(750, 400);
 
 	Point points(window); //przekazac do gameplay
-
+/*
 	player.setPos(50, 50);
 
 	points.setPos(0,500, 350);
@@ -44,7 +58,7 @@ int main()
 	{
 		Enemy2.setPos(i, 580, 160+i * 142);
 	}
-
+*/
 
 	while (window.isOpen())
 	{
@@ -63,19 +77,75 @@ int main()
 			std::cout << "Y:" << mousepos.y << std::endl;
 		}
 
-		if (timer.getElapsedTime().asMicroseconds() > 0.0166)
+		if (timer.getElapsedTime().asMicroseconds() > 0.001)
 		{
+			switch(gamestatus)
+			{
+			case MAINMENU:
+			{
+				systemstatus = LOADING;
+				gamestatus = LEVEL1;
+				break;
+			}
+			case LEVEL1:
+			{				
+				if (systemstatus == LOADING)
+				{
+					player.setPos(50, 50);
+
+					points.setPos(0, 500, 350);
+					points.setPos(1, 50, 700);
+					points.setPos(2, 1000, 700);
+					points.setPos(3, 1000, 50);
+
+					Enemy1.setPos(0, 455, 110);
+					Enemy1.setPos(1, 455, 110 + 142);
+					Enemy1.setPos(2, 455, 110 + 142 * 2);
+					Enemy1.setPos(3, 455, 110 + 142 * 3);
+
+					for (auto i = 0; i < 6; ++i)
+					{
+						Enemy2.setPos(i, 580, 160 + i * 142);
+					}
+
+					systemstatus = PLAYING;
+
+					if (systemstatus == PLAYING)
+					{
+						if (points.isPointChecked(0) == true &&
+							points.isPointChecked(1) == true &&
+							points.isPointChecked(2) == true &&
+							points.isPointChecked(3) == true)
+						{
+							gamestatus = LEVEL2;
+							systemstatus = LOADING;
+							break;
+						}
+					}
+				}
+			}
+			case LEVEL2:
+			{
+	
+				break;
+			}
+			default:
+				break;
+			}
+
 			window.clear(sf::Color::White);
 
 			obstacle.draw(window);
 			obstacle2.draw(window);
+			points.drawPoint(window); //przekazac do gameplay
+
 			obstacle.collision(player);
+
 			obstacle2.collision(player);
 
 			Enemy1.moveAxisX(window, 460, 580); //przekazac do gameplay
-			Enemy2.moveAxisX(window, 460, 580); //przekazac do gameplay
 
-			points.drawPoint(window); //przekazac do gameplay
+			Enemy2.moveAxisX(window, 460, 580); //przekazac do gameplay
 
 			points.collision(player);
 
@@ -91,5 +161,5 @@ int main()
 			timer.restart();
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
