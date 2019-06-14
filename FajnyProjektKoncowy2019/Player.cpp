@@ -35,10 +35,10 @@ void Player::playerMovement(sf::RenderWindow& window)
 		bodyRect.setPosition(12.f, bodyRect.getPosition().y);
 	if (bodyRect.getPosition().y < 12.f)
 		bodyRect.setPosition(bodyRect.getPosition().x, 12.f);
-	if (bodyRect.getPosition().x + bodyRect.getGlobalBounds().width > 1037.f)
-		bodyRect.setPosition(1037.f - bodyRect.getGlobalBounds().width, bodyRect.getPosition().y);
-	if (bodyRect.getPosition().y + bodyRect.getGlobalBounds().height > 780.f)
-		bodyRect.setPosition(bodyRect.getPosition().x, 780.f - bodyRect.getGlobalBounds().height);
+	if (bodyRect.getPosition().x + bodyRect.getGlobalBounds().width > window.getSize().x + 12.f)
+		bodyRect.setPosition(window.getSize().x + 12.f - bodyRect.getGlobalBounds().width, bodyRect.getPosition().y);
+	if (bodyRect.getPosition().y + bodyRect.getGlobalBounds().height > window.getSize().y + 12.f)
+		bodyRect.setPosition(bodyRect.getPosition().x, window.getSize().y + 12.f - bodyRect.getGlobalBounds().height);
 
 	window.draw(bodyRect);
 

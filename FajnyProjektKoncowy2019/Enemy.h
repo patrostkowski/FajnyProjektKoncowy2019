@@ -6,11 +6,10 @@
 
 enum Dir { LEFT, RIGHT, UP, DOWN, SLANTTOP, SLANTBOTTOM};
 
-class Enemy
+class Enemy: public Particle
 {
-	sf::CircleShape bodyEnemy[10];
 	Dir direction;
-	float drift;
+	float speed;
 public:
 	Enemy(int count, Dir dir, float speed, sf::RenderWindow& window);
 	void setPos(int indx, float posx, float posy);
@@ -19,4 +18,5 @@ public:
 	void moveAxisY(sf::RenderWindow & window, float y1, float y2);
 	void SlantFall(sf::RenderWindow & window, float x, float y);
 	void SlantRise(sf::RenderWindow & window, float x, float y);
+	sf::FloatRect getBorder(int indx) const override;
 };

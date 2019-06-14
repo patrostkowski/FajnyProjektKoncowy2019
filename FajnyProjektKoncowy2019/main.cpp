@@ -7,58 +7,46 @@
 #include "Enemy.h"
 #include "Obstacles.h"
 #include "Sound.h"
-
-enum GameState
-{
-	MAINMENU,LEVEL1,LEVEL2
-};
-enum SystemState
-{
-	PLAYING,
-	LOADING,
-	IDLE
-};
+#include "Level.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1024, 768), "The Game");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
 	sf::Clock timer;
-
-	GameState gamestatus=LEVEL1;
-	SystemState systemstatus = LOADING;
 
 	Sound music("theme");
 	Sound sounds;
 
 	Player player(window);
-
-	Enemy Enemy1(4,RIGHT,0.01f,window); //przekazac do gameplay
-	Enemy Enemy2(4,LEFT,0.01f,window); //przekazac do gameplay
-
-	Obstacles obstacle(300, 600, window);
-	Obstacles obstacle2(300, 600, window);
-	obstacle.setPos(300, 400);
-	obstacle2.setPos(750, 400);
-
+	Level Level1(LEVEL1);
+	Enemy enemy1_grp1(4,RIGHT,0.01f,window); //przekazac do gameplay
 	Point points(window); //przekazac do gameplay
-/*
+	Obstacles obstacle(300, 600, window);
+
 	player.setPos(50, 50);
 
-	points.setPos(0,500, 350);
-	points.setPos(1,50, 700);
-	points.setPos(2,1000, 700);
-	points.setPos(3,1000, 50);
+	obstacle.setSize(0, 400.f, 125.f);
+	obstacle.setPos(0, 200.f, 140.f);
+	obstacle.setSize(1, 400.f, 125.f);
+	obstacle.setPos(1, 200.f, 140.f + 200.f);
+	obstacle.setSize(2, 400.f, 125.f);
+	obstacle.setPos(2, 200.f, 140.f + 400.f);
+	obstacle.setSize(3, 250.f, 380.f);
+	obstacle.setPos(3, 600.f, 420.f);
+	obstacle.setSize(4, 350.f, 100.f);
+	obstacle.setPos(4, 650.f, 100.f);
 
-	Enemy1.setPos(0, 455, 110);
-	Enemy1.setPos(1, 455, 110+142);
-	Enemy1.setPos(2, 455, 110+142*2);
-	Enemy1.setPos(3, 455, 110+142*3);
+	points.setPos(0,15, 235);
+	points.setPos(1,15, 435);
+	points.setPos(2,770, 20);
+	points.setPos(3,760, 575);
 
-	for (auto i = 0; i < 6; ++i)
-	{
-		Enemy2.setPos(i, 580, 160+i * 142);
-	}
-*/
+	enemy1_grp1.setPos(0, 455, 110);
+	enemy1_grp1.setPos(1, 455, 110+142);
+	enemy1_grp1.setPos(2, 455, 110+142*2);
+	enemy1_grp1.setPos(3, 455, 110+142*3);
+
+
 
 	while (window.isOpen())
 	{
@@ -79,82 +67,17 @@ int main()
 
 		if (timer.getElapsedTime().asMicroseconds() > 0.001)
 		{
-			switch(gamestatus)
-			{
-			case MAINMENU:
-			{
-				systemstatus = LOADING;
-				gamestatus = LEVEL1;
-				break;
-			}
-			case LEVEL1:
-			{				
-				if (systemstatus == LOADING)
-				{
-					player.setPos(50, 50);
-
-					points.setPos(0, 500, 350);
-					points.setPos(1, 50, 700);
-					points.setPos(2, 1000, 700);
-					points.setPos(3, 1000, 50);
-
-					Enemy1.setPos(0, 455, 110);
-					Enemy1.setPos(1, 455, 110 + 142);
-					Enemy1.setPos(2, 455, 110 + 142 * 2);
-					Enemy1.setPos(3, 455, 110 + 142 * 3);
-
-					for (auto i = 0; i < 6; ++i)
-					{
-						Enemy2.setPos(i, 580, 160 + i * 142);
-					}
-
-					systemstatus = PLAYING;
-
-					if (systemstatus == PLAYING)
-					{
-						if (points.isPointChecked(0) == true &&
-							points.isPointChecked(1) == true &&
-							points.isPointChecked(2) == true &&
-							points.isPointChecked(3) == true)
-						{
-							gamestatus = LEVEL2;
-							systemstatus = LOADING;
-							break;
-						}
-					}
-				}
-			}
-			case LEVEL2:
-			{
-	
-				break;
-			}
-			default:
-				break;
-			}
-
 			window.clear(sf::Color::White);
-
-			obstacle.draw(window);
-			obstacle2.draw(window);
-			points.drawPoint(window); //przekazac do gameplay
-
-			obstacle.collision(player);
-
-			obstacle2.collision(player);
-
-			Enemy1.moveAxisX(window, 460, 580); //przekazac do gameplay
-
-			Enemy2.moveAxisX(window, 460, 580); //przekazac do gameplay
-
-			points.collision(player);
-
-			Enemy2.collision(player);
 
 			player.playerMovement(window); //przekazac do gameplay
 
-			if (Enemy1.collision(player) == true)
-				sounds.playSound(1);
+			obstacle.draw(window);
+			points.drawPoint(window); //przekazac do gameplay
+			obstacle.collision(player);
+			enemy1_grp1.moveAxisX(window, 460, 580); //przekazac do gameplay
+			points.collision(player);
+			enemy1_grp1.collision(player);
+
 
 			window.display();
 			window.clear();

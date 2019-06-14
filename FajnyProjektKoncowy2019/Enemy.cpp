@@ -10,7 +10,7 @@ Enemy::Enemy(int count, Dir dir, float speed, sf::RenderWindow & window)
 		bodyEnemy[i].setRadius(10);
 		bodyEnemy[i].setOutlineThickness(2);
 		bodyEnemy[i].setOrigin(5, 5);
-		drift = speed;
+		this->speed = speed;
 		direction = dir;
 	}
 }
@@ -43,7 +43,7 @@ void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)
 		{
 		case LEFT:
 		{
-			bodyEnemy[i].move(sf::Vector2f(-drift, 0));
+			bodyEnemy[i].move(sf::Vector2f(-speed, 0));
 			if (bodyEnemy[i].getPosition().x <= min)
 				direction = RIGHT;
 
@@ -51,7 +51,7 @@ void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)
 		}
 		case RIGHT:
 		{
-			bodyEnemy[i].move(sf::Vector2f(drift, 0));
+			bodyEnemy[i].move(sf::Vector2f(speed, 0));
 			if (bodyEnemy[i].getPosition().x >= max)
 				direction = LEFT;
 
@@ -71,7 +71,7 @@ void Enemy::moveAxisY(sf::RenderWindow & window, float min, float max)
 		{
 		case UP:
 		{
-			bodyEnemy[i].move(sf::Vector2f(0, -drift));
+			bodyEnemy[i].move(sf::Vector2f(0, -speed));
 			if (bodyEnemy[i].getPosition().y <= min)
 				direction = DOWN;
 
@@ -79,7 +79,7 @@ void Enemy::moveAxisY(sf::RenderWindow & window, float min, float max)
 		}
 		case DOWN:
 		{
-			bodyEnemy[i].move(sf::Vector2f(0, drift));
+			bodyEnemy[i].move(sf::Vector2f(0, speed));
 			if (bodyEnemy[i].getPosition().y >= max)
 				direction = UP;
 
@@ -99,7 +99,7 @@ void Enemy::SlantFall(sf::RenderWindow & window, float min, float max)
 		{
 		case SLANTTOP:
 		{
-			bodyEnemy[i].move(sf::Vector2f(-drift, -drift));
+			bodyEnemy[i].move(sf::Vector2f(-speed, -speed));
 			if (bodyEnemy[i].getPosition().y <= min)
 				direction = SLANTBOTTOM;
 
@@ -107,7 +107,7 @@ void Enemy::SlantFall(sf::RenderWindow & window, float min, float max)
 		}
 		case SLANTBOTTOM:
 		{
-			bodyEnemy[i].move(sf::Vector2f(drift, drift));
+			bodyEnemy[i].move(sf::Vector2f(speed, speed));
 			if (bodyEnemy[i].getPosition().y >= max)
 				direction = SLANTTOP;
 			break;
@@ -126,7 +126,7 @@ void Enemy::SlantRise(sf::RenderWindow & window, float min, float max)
 		{
 		case SLANTTOP:
 		{
-			bodyEnemy[i].move(sf::Vector2f(drift, -drift));
+			bodyEnemy[i].move(sf::Vector2f(speed, -speed));
 			if (bodyEnemy[i].getPosition().y <= min)
 				direction = SLANTBOTTOM;
 
@@ -134,11 +134,16 @@ void Enemy::SlantRise(sf::RenderWindow & window, float min, float max)
 		}
 		case SLANTBOTTOM:
 		{
-			bodyEnemy[i].move(sf::Vector2f(-drift, drift));
+			bodyEnemy[i].move(sf::Vector2f(-speed, speed));
 			if (bodyEnemy[i].getPosition().y >= max)
 				direction = SLANTTOP;
 			break;
 		}
 		}
 	}
+}
+
+sf::FloatRect Enemy::getBorder(int indx) const
+{
+	return bodyEnemy[indx].getGlobalBounds();
 }
