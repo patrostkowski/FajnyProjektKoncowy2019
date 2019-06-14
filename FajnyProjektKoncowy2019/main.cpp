@@ -19,7 +19,9 @@ int main()
 
 	Player player(window);
 	Level Level1(LEVEL1);
-	Enemy enemy1_grp1(4,RIGHT,0.01f,window); //przekazac do gameplay
+	Enemy enemy1_grp1(2,RIGHT,0.09f,window); //przekazac do gameplay
+	Enemy enemy1_grp2(2, LEFT,0.09f,window); //przekazac do gameplay
+
 	Point points(window); //przekazac do gameplay
 	Obstacles obstacle(300, 600, window);
 
@@ -33,18 +35,19 @@ int main()
 	obstacle.setPos(2, 200.f, 140.f + 400.f);
 	obstacle.setSize(3, 250.f, 380.f);
 	obstacle.setPos(3, 600.f, 420.f);
-	obstacle.setSize(4, 350.f, 100.f);
-	obstacle.setPos(4, 650.f, 100.f);
+	obstacle.setSize(4, 350.f, 90.f);
+	obstacle.setPos(4, 650.f, 125.f);
 
 	points.setPos(0,15, 235);
 	points.setPos(1,15, 435);
-	points.setPos(2,770, 20);
+	points.setPos(2,770, 35);
 	points.setPos(3,760, 575);
 
-	enemy1_grp1.setPos(0, 455, 110);
-	enemy1_grp1.setPos(1, 455, 110+142);
-	enemy1_grp1.setPos(2, 455, 110+142*2);
-	enemy1_grp1.setPos(3, 455, 110+142*3);
+	enemy1_grp1.setPos(0, 50, 220);
+	enemy1_grp1.setPos(1, 50, 420);
+
+	enemy1_grp2.setPos(0, 375, 250);
+	enemy1_grp2.setPos(1, 375, 450);
 
 
 
@@ -72,10 +75,16 @@ int main()
 			player.playerMovement(window); //przekazac do gameplay
 
 			obstacle.draw(window);
+
 			points.drawPoint(window); //przekazac do gameplay
+
 			obstacle.collision(player);
-			enemy1_grp1.moveAxisX(window, 460, 580); //przekazac do gameplay
+
+			enemy1_grp1.moveAxisX(window, 0, 375); //przekazac do gameplay
+			enemy1_grp2.moveAxisX(window, 0, 375); //przekazac do gameplay
+
 			points.collision(player);
+
 			enemy1_grp1.collision(player);
 
 

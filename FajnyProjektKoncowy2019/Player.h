@@ -6,7 +6,7 @@
 class Player
 {
 	sf::RectangleShape bodyRect;
-	const float speed = 0.09f;
+	const float speed = 0.03f;
 public:
 	Player(sf::RenderWindow& window);
 	void setPos(float posx, float posy);
