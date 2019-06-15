@@ -9,20 +9,28 @@
 #include "Sound.h"
 #include "Level.h"
 
+enum GameLayer
+{
+	MAINMENU, LEVEL1
+};
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
 	sf::Clock timer;
+	Level lvl;
+	GameLayer gamelayer=MAINMENU;
 
 	Sound music("theme");
 	Sound sounds;
 
 	Player player(window);
-	Level Level1(LEVEL1);
 
 	Point points(window); //przekazac do gameplay
 	Obstacles obstacle(300, 600, window);
 
+	lvl.setup_lvl1(window, player, obstacle, points);
+/*
 	player.setPos(50, 50);
 
 	obstacle.setSize(0, 400.f, 125.f);
@@ -45,7 +53,7 @@ int main()
 
 	for (auto i = 0; i < 10; ++i)
 	{
-		vec_lvl1.emplace_back(0.1f, window);
+		vec_lvl1.emplace_back(0.2f, window);
 	}
 
 	vec_lvl1[0].setPos(50, 225);
@@ -59,6 +67,25 @@ int main()
 
 	vec_lvl1[3].setPos(375, 255);
 	vec_lvl1[3].setDir(LEFT);
+
+	vec_lvl1[4].setPos(730, 20);
+	vec_lvl1[4].setDir(LEFT);
+
+	vec_lvl1[5].setPos(500, 55);
+	vec_lvl1[5].setDir(RIGHT);
+
+	vec_lvl1[6].setPos(420, 100);
+	vec_lvl1[6].setDir(DOWN);
+
+	vec_lvl1[7].setPos(450, 575);
+	vec_lvl1[7].setDir(UP);
+
+	vec_lvl1[8].setPos(780, 525);
+	vec_lvl1[8].setDir(UP);
+
+	vec_lvl1[9].setPos(750, 225);
+	vec_lvl1[9].setDir(DOWN);
+*/
 
 
 	while (window.isOpen())
@@ -82,6 +109,28 @@ int main()
 		{
 			window.clear(sf::Color::White);
 
+			switch (gamelayer)
+			{
+			case MAINMENU:
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+					gamelayer = LEVEL1;
+				break;
+			}
+			case LEVEL1:
+			{
+				lvl.draw_lvl1(window, player, obstacle, points);
+			
+				if (points.isPointChecked(0) == true &&
+					points.isPointChecked(1) == true &&
+					points.isPointChecked(2) == true &&
+					points.isPointChecked(3) == true)
+					gamelayer = MAINMENU;
+					
+				break;
+			}
+			}
+/*
 			player.playerMovement(window); //przekazac do gameplay
 
 			obstacle.draw(window);
@@ -94,8 +143,24 @@ int main()
 			vec_lvl1[1].moveAxisX(window, 50, 375);
 			vec_lvl1[2].moveAxisX(window, 50, 375);
 			vec_lvl1[3].moveAxisX(window, 50, 375);
+			vec_lvl1[4].moveAxisX(window, 500, 730);
+			vec_lvl1[5].moveAxisX(window, 500, 730);
+			vec_lvl1[6].moveAxisY(window, 100, 575);
+			vec_lvl1[7].moveAxisY(window, 100, 575);
+			vec_lvl1[8].moveAxisY(window, 225, 525);
+			vec_lvl1[9].moveAxisY(window, 225, 525);
 
-
+			vec_lvl1[0].collision(player);
+			vec_lvl1[1].collision(player);
+			vec_lvl1[2].collision(player);
+			vec_lvl1[3].collision(player);
+			vec_lvl1[4].collision(player);
+			vec_lvl1[5].collision(player);
+			vec_lvl1[6].collision(player);
+			vec_lvl1[7].collision(player);
+			vec_lvl1[8].collision(player);
+			vec_lvl1[9].collision(player);
+*/
 			window.display();
 			window.clear();
 			timer.restart();

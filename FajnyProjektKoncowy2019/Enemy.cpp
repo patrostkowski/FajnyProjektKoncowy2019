@@ -28,7 +28,7 @@ bool Enemy::collision(Player & player)
 		player.resetPos();			
 		return true;
 	}
-	else return false;
+	return false;
 }
 
 void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)
