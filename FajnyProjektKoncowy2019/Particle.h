@@ -6,7 +6,6 @@
 class Particle
 {
 protected: 
-	sf::CircleShape bodyEnemy[2];
 	sf::RectangleShape bodyRect[10];
 	sf::CircleShape bodyCircle;
 public:

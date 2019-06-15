@@ -19,9 +19,6 @@ int main()
 
 	Player player(window);
 	Level Level1(LEVEL1);
-	Enemy enemy1_grp1(2,RIGHT,0.05f,window); //przekazac do gameplay
-	Enemy enemy1_grp2(2,LEFT,0.05f,window); //przekazac do gameplay
-	Enemy enemy1_grp3(2, DOWN, 0.05f, window); //przekazac do gameplay
 
 	Point points(window); //przekazac do gameplay
 	Obstacles obstacle(300, 600, window);
@@ -44,15 +41,24 @@ int main()
 	points.setPos(2,770, 40);
 	points.setPos(3,765, 580);
 
-	enemy1_grp1.setPos(0, 50, 225);
-	enemy1_grp1.setPos(1, 50, 425);
+	std::vector<Enemy> vec_lvl1;
 
-	enemy1_grp2.setPos(0, 375, 255);
-	enemy1_grp2.setPos(1, 375, 455);
+	for (auto i = 0; i < 10; ++i)
+	{
+		vec_lvl1.emplace_back(0.1f, window);
+	}
 
-	enemy1_grp3.setPos(0, 425, 95);
-	enemy1_grp3.setPos(1, 455, 95);
+	vec_lvl1[0].setPos(50, 225);
+	vec_lvl1[0].setDir(RIGHT);
 
+	vec_lvl1[1].setPos(375, 425);
+	vec_lvl1[1].setDir(LEFT);
+
+	vec_lvl1[2].setPos(50, 455);
+	vec_lvl1[2].setDir(RIGHT);
+
+	vec_lvl1[3].setPos(375, 255);
+	vec_lvl1[3].setDir(LEFT);
 
 
 	while (window.isOpen())
@@ -84,13 +90,10 @@ int main()
 			obstacle.collision(player);
 			points.collision(player);
 
-			enemy1_grp1.moveAxisX(window, 50, 375); //przekazac do gameplay
-			enemy1_grp2.moveAxisX(window, 50, 375); //przekazac do gameplay
-			enemy1_grp3.moveAxisY(window, 95, 575); //przekazac do gameplay
-
-			enemy1_grp1.collision(player);
-			enemy1_grp2.collision(player);
-			enemy1_grp3.collision(player);
+			vec_lvl1[0].moveAxisX(window, 50, 375);
+			vec_lvl1[1].moveAxisX(window, 50, 375);
+			vec_lvl1[2].moveAxisX(window, 50, 375);
+			vec_lvl1[3].moveAxisX(window, 50, 375);
 
 
 			window.display();
