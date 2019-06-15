@@ -9,7 +9,7 @@ Point::Point(sf::RenderWindow& window)
 		bodyPoint[i].setOutlineColor(sf::Color::Black);
 		bodyPoint[i].setRadius(10);
 		bodyPoint[i].setOutlineThickness(2);
-		bodyPoint[i].setOrigin(5, 5);
+		bodyPoint[i].setOrigin(10, 10);
 		pointCheck[i] = false;
 	}
 	/*

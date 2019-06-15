@@ -10,6 +10,7 @@ class Enemy: public Particle
 {
 	Dir direction;
 	float speed;
+	int body_size;
 public:
 	Enemy(int count, Dir dir, float speed, sf::RenderWindow& window);
 	void setPos(int indx, float posx, float posy);

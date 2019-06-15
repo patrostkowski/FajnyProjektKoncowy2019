@@ -9,7 +9,7 @@ Enemy::Enemy(int count, Dir dir, float speed, sf::RenderWindow & window)
 		bodyEnemy[i].setOutlineColor(sf::Color::Black);
 		bodyEnemy[i].setRadius(10);
 		bodyEnemy[i].setOutlineThickness(2);
-		bodyEnemy[i].setOrigin(5, 5);
+		bodyEnemy[i].setOrigin(10, 10);
 		this->speed = speed;
 		direction = dir;
 	}
@@ -35,8 +35,10 @@ bool Enemy::collision(Player & player)
 
 void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)
 {	
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 2; i++)
 	{
+//		std::cout << i << " x: " << bodyEnemy[i].getPosition().x << std::endl;
+//		std::cout << i << " y: " << bodyEnemy[i].getPosition().y << std::endl;
 		window.draw(bodyEnemy[i]);
 
 		switch (direction)
@@ -58,12 +60,14 @@ void Enemy::moveAxisX(sf::RenderWindow & window, float min, float max)
 			break;
 		}
 		}
+
+
 	}
 }
 
 void Enemy::moveAxisY(sf::RenderWindow & window, float min, float max)
 {
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 2; i++)
 	{
 		window.draw(bodyEnemy[i]);
 
@@ -91,7 +95,7 @@ void Enemy::moveAxisY(sf::RenderWindow & window, float min, float max)
 
 void Enemy::SlantFall(sf::RenderWindow & window, float min, float max)
 {
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 2; i++)
 	{
 		window.draw(bodyEnemy[i]);
 
@@ -118,7 +122,7 @@ void Enemy::SlantFall(sf::RenderWindow & window, float min, float max)
 
 void Enemy::SlantRise(sf::RenderWindow & window, float min, float max)
 {
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 2; i++)
 	{
 		window.draw(bodyEnemy[i]);
 
