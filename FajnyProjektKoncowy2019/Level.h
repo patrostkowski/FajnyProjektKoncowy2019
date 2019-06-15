@@ -10,11 +10,11 @@ class Level
 	std::vector<Enemy> vec_lvl1;
 public:
 	Level();
-	void setup_lvl1(sf::RenderWindow &window, 
+	virtual void setup_lvl1(sf::RenderWindow &window, 
 		Player &player, 
 		Obstacles &obstacle,
 		Point &points);
-	void draw_lvl1(sf::RenderWindow &window,
+	virtual void draw_lvl1(sf::RenderWindow &window,
 		Player &player,
 		Obstacles &obstacle,
 		Point &points);
