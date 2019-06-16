@@ -1,86 +1,80 @@
 #include "Obstacles.h"
 
 
-Obstacles::Obstacles(int width, int heigth, sf::RenderWindow &window)
+Obstacles::Obstacles(sf::RenderWindow &window)
 {
-	for (auto i = 0; i < 10; i++)
-	{
-		bodyRect[i].setFillColor(sf::Color(105, 105, 105));
-		bodyRect[i].setOutlineColor(sf::Color::Black);
-		bodyRect[i].setOutlineThickness(2);
-		window.draw(bodyRect[i]);
-	}
+	bodyRect.setFillColor(sf::Color(105, 105, 105));
+	bodyRect.setOutlineColor(sf::Color::Black);
+	bodyRect.setOutlineThickness(2);
+	window.draw(bodyRect);
 	window.display();
 }
 
-sf::FloatRect Obstacles::getBorder(int indx) const
+sf::FloatRect Obstacles::getBorder() const
 {
-	return bodyRect[indx].getGlobalBounds();
+	return bodyRect.getGlobalBounds();
 }
 
-void Obstacles::setSize(int indx, float posx, float posy)
+void Obstacles::setSize(float posx, float posy)
 {
-	bodyRect[indx].setOrigin(posx / 2, posy / 2);
-	bodyRect[indx].setSize(sf::Vector2f(posx, posy));
+	bodyRect.setOrigin(posx / 2, posy / 2);
+	bodyRect.setSize(sf::Vector2f(posx, posy));
 }
 
-void Obstacles::setPos(int indx,float posx, float posy)
+void Obstacles::setPos(float posx, float posy)
 {
-	bodyRect[indx].setPosition(posx, posy);
+	bodyRect.setPosition(posx, posy);
 }
 
 void Obstacles::draw(sf::RenderWindow & window)
 {
-	for (auto i = 0; i < 10; i++)
-		window.draw(bodyRect[i]);
+	window.draw(bodyRect);
 }
 
 void Obstacles::collision(Player & player)
 {
 	float left, right, top, bottom;
-	for (auto i = 0; i < 10; i++)
-	{
-	left = bodyRect[i].getGlobalBounds().left - 12.f;
-	right = bodyRect[i].getGlobalBounds().left + bodyRect[i].getSize().x + 14.f;
-	top = bodyRect[i].getGlobalBounds().top - bodyRect[i].getSize().y / 2 - 13.f;
-	bottom = bodyRect[i].getGlobalBounds().top + bodyRect[i].getSize().y / 2 + 13.f;
 
-	if (bodyRect[i].getGlobalBounds().intersects(player.getBorder()))
+	left = bodyRect.getGlobalBounds().left - 12.f;
+	right = bodyRect.getGlobalBounds().left + bodyRect.getSize().x + 14.f;
+	top = bodyRect.getGlobalBounds().top - bodyRect.getSize().y / 2 - 13.f;
+	bottom = bodyRect.getGlobalBounds().top + bodyRect.getSize().y / 2 + 13.f;
+
+	if (bodyRect.getGlobalBounds().intersects(player.getBorder()))
 	{
 		//X
 
-		if (player.getBorderLeft() < bodyRect[i].getGlobalBounds().left &&
-			player.getBorderLeft() + player.getBorderWidth() < bodyRect[i].getGlobalBounds().left + bodyRect[i].getGlobalBounds().width &&
-			player.getBorderTop() < bodyRect[i].getGlobalBounds().top + bodyRect[i].getGlobalBounds().height &&
-			player.getBorderTop() + player.getBorderHeight() > bodyRect[i].getGlobalBounds().top)
+		if (player.getBorderLeft() < bodyRect.getGlobalBounds().left &&
+			player.getBorderLeft() + player.getBorderWidth() < bodyRect.getGlobalBounds().left + bodyRect.getGlobalBounds().width &&
+			player.getBorderTop() < bodyRect.getGlobalBounds().top + bodyRect.getGlobalBounds().height &&
+			player.getBorderTop() + player.getBorderHeight() > bodyRect.getGlobalBounds().top)
 		{
-			player.setPos(bodyRect[i].getGlobalBounds().left - 12.f, player.getPlayerY());
+			player.setPos(bodyRect.getGlobalBounds().left - 12.f, player.getPlayerY());
 		}
-		else if (player.getBorderLeft() > bodyRect[i].getGlobalBounds().left &&
-			player.getBorderLeft() + player.getBorderWidth() > bodyRect[i].getGlobalBounds().left + bodyRect[i].getGlobalBounds().width &&
-			player.getBorderTop() < bodyRect[i].getGlobalBounds().top + bodyRect[i].getGlobalBounds().height &&
-			player.getBorderTop() + player.getBorderHeight() > bodyRect[i].getGlobalBounds().top)
+		else if (player.getBorderLeft() > bodyRect.getGlobalBounds().left &&
+			player.getBorderLeft() + player.getBorderWidth() > bodyRect.getGlobalBounds().left + bodyRect.getGlobalBounds().width &&
+			player.getBorderTop() < bodyRect.getGlobalBounds().top + bodyRect.getGlobalBounds().height &&
+			player.getBorderTop() + player.getBorderHeight() > bodyRect.getGlobalBounds().top)
 		{
-			player.setPos(bodyRect[i].getGlobalBounds().left + 16.f + bodyRect[i].getSize().x, player.getPlayerY());
+			player.setPos(bodyRect.getGlobalBounds().left + 16.f + bodyRect.getSize().x, player.getPlayerY());
 		}
 
 		// Y
 
-		if (player.getBorderTop() < bodyRect[i].getGlobalBounds().top &&
-			player.getBorderTop() + player.getBorderHeight() < bodyRect[i].getGlobalBounds().top + bodyRect[i].getGlobalBounds().height &&
-			player.getBorderLeft() < bodyRect[i].getGlobalBounds().left + bodyRect[i].getGlobalBounds().width &&
-			player.getBorderLeft() + player.getBorderWidth() > bodyRect[i].getGlobalBounds().left)
+		if (player.getBorderTop() < bodyRect.getGlobalBounds().top &&
+			player.getBorderTop() + player.getBorderHeight() < bodyRect.getGlobalBounds().top + bodyRect.getGlobalBounds().height &&
+			player.getBorderLeft() < bodyRect.getGlobalBounds().left + bodyRect.getGlobalBounds().width &&
+			player.getBorderLeft() + player.getBorderWidth() > bodyRect.getGlobalBounds().left)
 		{
-			player.setPos(player.getPlayerX(), bodyRect[i].getGlobalBounds().top - 12.f);
+			player.setPos(player.getPlayerX(), bodyRect.getGlobalBounds().top - 12.f);
 		}
-		else if (player.getBorderTop() > bodyRect[i].getGlobalBounds().top &&
-			player.getBorderTop() + player.getBorderHeight() > bodyRect[i].getGlobalBounds().top + bodyRect[i].getGlobalBounds().height &&
-			player.getBorderLeft() < bodyRect[i].getGlobalBounds().left + bodyRect[i].getGlobalBounds().width &&
-			player.getBorderLeft() + player.getBorderWidth() > bodyRect[i].getGlobalBounds().left)
+		else if (player.getBorderTop() > bodyRect.getGlobalBounds().top &&
+			player.getBorderTop() + player.getBorderHeight() > bodyRect.getGlobalBounds().top + bodyRect.getGlobalBounds().height &&
+			player.getBorderLeft() < bodyRect.getGlobalBounds().left + bodyRect.getGlobalBounds().width &&
+			player.getBorderLeft() + player.getBorderWidth() > bodyRect.getGlobalBounds().left)
 		{
-			player.setPos(player.getPlayerX(), bodyRect[i].getGlobalBounds().top + 16.f + bodyRect[i].getSize().y);
+			player.setPos(player.getPlayerX(), bodyRect.getGlobalBounds().top + 16.f + bodyRect.getSize().y);
 		}
-	}
 	}
 }
 

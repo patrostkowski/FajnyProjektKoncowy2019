@@ -4,10 +4,10 @@
 class Obstacles: public Particle
 {
 public:
-	Obstacles(int width, int heigth, sf::RenderWindow &window);
-	sf::FloatRect getBorder(int indx) const;
-	void setSize(int indx, float posx, float posy);
-	void setPos(int indx, float posx, float posy);
+	Obstacles(sf::RenderWindow &window);
+	sf::FloatRect getBorder() const;
+	void setSize(float posx, float posy);
+	void setPos(float posx, float posy);
 	void draw(sf::RenderWindow &window);
 	void collision(Player &player);
 };

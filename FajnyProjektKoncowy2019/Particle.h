@@ -6,11 +6,11 @@
 class Particle
 {
 protected: 
-	sf::RectangleShape bodyRect[10];
+	sf::RectangleShape bodyRect;
 	sf::CircleShape bodyCircle;
 public:
-	virtual void setPos(int indx, float posX, float posY) = 0;
-	virtual sf::FloatRect getBorder(int indx) const = 0;
+	virtual void setPos(float posX, float posY) = 0;
+	virtual sf::FloatRect getBorder() const = 0;
 };
 
 

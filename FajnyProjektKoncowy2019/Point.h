@@ -5,13 +5,13 @@
 
 class Point
 {
-	sf::CircleShape bodyPoint[4];
-	bool pointCheck[4];
+	sf::CircleShape bodyPoint;
+	bool pointCheck;
 public:
 	Point(sf::RenderWindow & window);
-	void setPos(int indx, float posx, float posy);
+	void setPos(float posx, float posy);
 	void drawPoint(sf::RenderWindow & window);
 	void collision(Player &player);
-	bool isPointChecked(int a) const;
+	bool isPointChecked() const;
 };
 

@@ -19,6 +19,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
 	sf::Clock timer;
 	Level lvl;
+
 	GameLayer gamelayer=MAINMENU;
 
 	Sound music("theme");
@@ -26,10 +27,7 @@ int main()
 
 	Player player(window);
 
-	Point points(window); //przekazac do gameplay
-	Obstacles obstacle(300, 600, window);
-
-	lvl.setup_lvl1(window, player, obstacle, points);
+	lvl.setup_lvl1(window, player);
 
 	while (window.isOpen())
 	{
@@ -62,12 +60,9 @@ int main()
 			}
 			case LEVEL1:
 			{
-				lvl.draw_lvl1(window, player, obstacle, points);
+				lvl.draw_lvl1(window, player);
 			
-				if (points.isPointChecked(0) == true &&
-					points.isPointChecked(1) == true &&
-					points.isPointChecked(2) == true &&
-					points.isPointChecked(3) == true)
+				if(lvl.end_lvl1()==true)
 					gamelayer = MAINMENU;
 					
 				break;
