@@ -9,7 +9,7 @@ Sound::Sound(std::string theme)
 		{
 			std::cout << "could not load music!";
 		}
-		music.setVolume(1);
+		music.setVolume(99);
 		music.play();
 		music.setLoop(true);
 }
@@ -37,4 +37,21 @@ Sound::Sound()
 void Sound::playSound(int i)
 {
 	sounds[i].play();
+}
+
+void Sound::muteSound()
+{
+	music.setVolume(0);
+}
+
+void Sound::unmuteSound()
+{
+	music.setVolume(musicVolume);
+}
+
+bool Sound::isMusicMuted()
+{
+	if(music.getVolume()==0)
+		return true;
+	else return false;
 }

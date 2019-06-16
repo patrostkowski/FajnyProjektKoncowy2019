@@ -11,7 +11,7 @@ public:
 	Point(sf::RenderWindow & window);
 	void setPos(float posx, float posy);
 	void drawPoint(sf::RenderWindow & window);
-	void collision(Player &player);
+	bool collision(Player &player);
 	bool isPointChecked() const;
 };
 

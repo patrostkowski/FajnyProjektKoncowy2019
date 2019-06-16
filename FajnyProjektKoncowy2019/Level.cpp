@@ -126,7 +126,12 @@ bool Level::end_lvl1()
 		vec_point_lvl1[1].isPointChecked() == true &&
 		vec_point_lvl1[2].isPointChecked() == true &&
 		vec_point_lvl1[3].isPointChecked() == true)
+	{
+		vec_obst_lvl1.clear();
+		vec_point_lvl1.clear();
+		vec_enemy_lvl1.clear();
 		return true;
+	}
 
 	return false;
 }

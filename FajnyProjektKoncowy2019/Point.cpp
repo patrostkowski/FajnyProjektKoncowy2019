@@ -27,7 +27,7 @@ void Point::drawPoint(sf::RenderWindow & window)
 	*/
 }
 
-void Point::collision(Player &player)
+bool Point::collision(Player &player)
 {
 	for (auto i = 0; i < 4; ++i)
 	{
@@ -36,8 +36,10 @@ void Point::collision(Player &player)
 			bodyPoint.setPosition(-100, -100);
 			std::cout << "point checked" << std::endl;
 			pointCheck = true;
+			return true;
 		}
 	}
+	return false;
 }
 
 bool Point::isPointChecked() const
