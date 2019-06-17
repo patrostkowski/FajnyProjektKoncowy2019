@@ -12,7 +12,7 @@
 
 enum GameLayer
 {
-	GAMESETUP, MAINMENU, LEVEL1
+	GAMESETUP, MAINMENU, LEVEL1, LEVEL2
 };
 
 int main()
@@ -84,7 +84,7 @@ int main()
 			}
 			}
 		}
-/*
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			system("cls");
@@ -92,7 +92,7 @@ int main()
 			std::cout<< "X:" << mousepos.x << std::endl;
 			std::cout << "Y:" << mousepos.y << std::endl;
 		}
-*/
+
 		if (timer.getElapsedTime().asMicroseconds() > 0.001)
 		{
 			window.clear(sf::Color::White);
@@ -101,8 +101,10 @@ int main()
 			{
 			case GAMESETUP:
 			{
+				player.setPos(65, 35);
 				lvl.setup_lvl1(window, player);
-				gamelayer = MAINMENU;
+				lvl.setup_lvl2(window, player);
+				gamelayer = MAINMENU; // TU ZMIENIAC DEBUG
 				break;
 			}
 			case MAINMENU:
@@ -114,9 +116,22 @@ int main()
 			{
 				lvl.draw_lvl1(window, player);
 			
-				if(lvl.end_lvl1()==true)
+				if (lvl.end_lvl1() == true)
+				{
+					gamelayer = LEVEL2;
+					player.setPos(65, 35);
+				}				
+				break;
+			}
+			case LEVEL2:
+			{
+				lvl.draw_lvl2(window, player);
+
+				if (lvl.end_lvl2() == true)
+				{
 					gamelayer = GAMESETUP;
-					
+					player.setPos(65, 35);
+				}
 				break;
 			}
 			}

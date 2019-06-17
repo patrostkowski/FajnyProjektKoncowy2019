@@ -75,7 +75,7 @@ float Player::getBorderHeight() const
 void Player::resetPos()
 {
 	std::cout << "Player reset\n";
-	bodyRect.setPosition(20, 20);
+	bodyRect.setPosition(65, 35);
 }
 
 float Player::getPlayerX() const
