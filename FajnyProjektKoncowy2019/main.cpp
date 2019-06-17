@@ -17,7 +17,7 @@ enum GameLayer
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Super Fajen Giera");
 	sf::Clock timer;
 	Level lvl;
 	MainMenu menu(window);
